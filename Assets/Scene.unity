@@ -1395,6 +1395,7 @@ GameObject:
   - component: {fileID: 1129796528}
   - component: {fileID: 1129796529}
   - component: {fileID: 1129796530}
+  - component: {fileID: 1129796531}
   m_Layer: 0
   m_Name: Rules
   m_TagString: Untagged
@@ -1454,6 +1455,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 594676896}
+--- !u!114 &1129796531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129796526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c61bbe0531649c3bee69fa571cbe05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1176862860
 GameObject:
   m_ObjectHideFlags: 0
