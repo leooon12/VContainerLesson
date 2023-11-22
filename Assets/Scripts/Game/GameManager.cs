@@ -7,7 +7,7 @@ using Utility;
 namespace Game
 {
     [DefaultExecutionOrder(-100)]
-    public sealed class GameManager : MonoBehaviour
+    public sealed class GameManager : MonoBehaviour, IGameManager
     {
         public static GameManager Instance { get; private set; }
         
