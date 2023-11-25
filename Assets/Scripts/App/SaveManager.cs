@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace App
 {
-    public static class SaveManager
+    public sealed class SaveManager
     {
-        public static void SaveValue(string key, object value)
+        public void SaveValue(string key, object value)
         {
             Debug.Log($"{key}: {value} was saved!");
         }

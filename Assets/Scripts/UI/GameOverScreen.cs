@@ -2,6 +2,7 @@ using App;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace UI
 {
@@ -13,14 +14,22 @@ namespace UI
         [SerializeField]
         private Button restartButton;
 
+        private SceneController _sceneController;
+
+        [Inject]
+        private void Construct(SceneController sceneController)
+        {
+            _sceneController = sceneController;
+        }
+        
         private void OnEnable()
         {
-            restartButton.onClick.AddListener(SceneController.RestartCurrentScene);
+            restartButton.onClick.AddListener(_sceneController.RestartCurrentScene);
         }
 
         private void OnDisable()
         {
-            restartButton.onClick.RemoveListener(SceneController.RestartCurrentScene);
+            restartButton.onClick.RemoveListener(_sceneController.RestartCurrentScene);
         }
 
         public void Show(string text)

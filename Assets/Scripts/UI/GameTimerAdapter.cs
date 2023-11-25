@@ -1,5 +1,6 @@
 using Game;
 using UnityEngine;
+using VContainer;
 
 namespace UI
 {
@@ -10,9 +11,10 @@ namespace UI
         
         private GameTimer _gameTimer;
 
-        private void Awake()
+        [Inject]
+        private void Construct(GameTimer gameTimer)
         {
-            _gameTimer = GameTimer.Instance;
+            _gameTimer = gameTimer;
         }
 
         void IStartGameListener.OnGameStarted()

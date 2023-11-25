@@ -1,29 +1,27 @@
 using Game;
 using UI;
-using UnityEngine;
 
 namespace Rules
 {
-    public sealed class GameOverScreenController : MonoBehaviour, IInitializeGameListener, IFinishGameListener
+    public sealed class GameOverScreenController : IInitializeGameListener, IFinishGameListener
     {
-        [SerializeField]
-        private GameOverScreen gameOverScreen;
-        
-        private GameTimer _gameTimer;
+        private readonly GameTimer _gameTimer;
+        private readonly GameOverScreen _gameOverScreen;
 
-        private void Awake()
+        GameOverScreenController(GameTimer gameTimer, GameOverScreen gameOverScreen)
         {
-            _gameTimer = GameTimer.Instance;
+            _gameTimer = gameTimer;
+            _gameOverScreen = gameOverScreen;
         }
         
         void IInitializeGameListener.OnGameInitialized()
         {
-            gameOverScreen.Hide();
+            _gameOverScreen.Hide();
         }
 
         void IFinishGameListener.OnGameFinished()
         {
-            gameOverScreen.Show($"Game over!\nYour time: {_gameTimer.CurrentTime:F1}");
+            _gameOverScreen.Show($"Game over!\nYour time: {_gameTimer.CurrentTime:F1}");
         }
     }
 }
