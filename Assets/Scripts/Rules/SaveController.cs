@@ -1,22 +1,21 @@
 using App;
 using Game;
+using UnityEngine;
 
 namespace Rules
 {
-    public sealed class SaveController : IFinishGameListener
+    public sealed class SaveController : MonoBehaviour, IFinishGameListener
     {
-        private readonly GameTimer _gameTimer;
-        private readonly SaveManager _saveManager;
+        private GameTimer _gameTimer;
 
-        SaveController(GameTimer gameTimer, SaveManager saveManager)
+        private void Awake()
         {
-            _gameTimer = gameTimer;
-            _saveManager = saveManager;
+            _gameTimer = GameTimer.Instance;
         }
         
         void IFinishGameListener.OnGameFinished()
         {
-            _saveManager.SaveValue("Time", _gameTimer.CurrentTime);
+            SaveManager.SaveValue("Time", _gameTimer.CurrentTime);
         }
     }
 }

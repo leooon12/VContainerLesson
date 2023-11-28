@@ -2,9 +2,9 @@ using UnityEngine.SceneManagement;
 
 namespace App
 {
-    public sealed class SceneController
+    public static class SceneController
     {
-        public void RestartCurrentScene()
+        public static void RestartCurrentScene()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

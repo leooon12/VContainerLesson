@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
-using VContainer;
 
+[DefaultExecutionOrder(-100)]
 public sealed class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
     public event Action<int> HealthChanged;
 
     public event Action Destroyed;
@@ -18,12 +20,20 @@ public sealed class Player : MonoBehaviour
 
     private CharacterController _characterController;
     
-    [Inject]
-    private void Construct(CharacterController characterController)
+    private void Awake()
     {
-        _characterController = characterController;
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+
+            _characterController = GetComponentInChildren<CharacterController>();
+        }
     }
-    
+
     private void Update()
     {
         var movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;

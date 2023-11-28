@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
+using Game;
+using Mechanics;
 using UnityEngine;
-using VContainer;
-using Random = UnityEngine.Random;
 
-public sealed class Tower : MonoBehaviour
+public sealed class Tower : MonoBehaviour, IStartGameListener, IFinishGameListener
 {
     [SerializeField]
     private Transform shootPoint;
@@ -15,22 +14,21 @@ public sealed class Tower : MonoBehaviour
     [SerializeField]
     private float maxShootTimeout = 1.5f;
 
-    private Func<Transform, Vector3, Projectile> _projectileFactory;
-    
+    private ProjectileSpawner _projectileSpawner;
+
     private Coroutine _attackCoroutine;
 
-    [Inject]
-    private void Construct(Func<Transform, Vector3, Projectile> projectileFactory)
+    private void Awake()
     {
-        _projectileFactory = projectileFactory;
+        _projectileSpawner = GetComponentInChildren<ProjectileSpawner>();
     }
 
-    public void StartShooting()
+    void IStartGameListener.OnGameStarted()
     {
         _attackCoroutine = StartCoroutine(AttackCoroutine());
     }
 
-    public void StopShooting()
+    void IFinishGameListener.OnGameFinished()
     {
         if (_attackCoroutine != null)
         {
@@ -46,7 +44,7 @@ public sealed class Tower : MonoBehaviour
             var timeout = Random.Range(minShootTimeout, maxShootTimeout);
             yield return new WaitForSeconds(timeout);
 
-            _projectileFactory.Invoke(transform, shootPoint.position);
+            _projectileSpawner.SpawnProjectile(transform, shootPoint.position);
         }
         
         // ReSharper disable once IteratorNeverReturns

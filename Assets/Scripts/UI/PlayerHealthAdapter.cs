@@ -1,6 +1,5 @@
 using Game;
 using UnityEngine;
-using VContainer;
 
 namespace UI
 {
@@ -11,10 +10,9 @@ namespace UI
 
         private Player _player;
 
-        [Inject]
-        private void Construct(Player player)
+        private void Awake()
         {
-            _player = player;
+            _player = Player.Instance;
         }
 
         void IStartGameListener.OnGameStarted()

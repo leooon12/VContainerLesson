@@ -1,27 +1,34 @@
 using Sirenix.OdinInspector;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Utility;
-using VContainer;
 
 namespace Game
 {
+    [DefaultExecutionOrder(-100)]
     public sealed class GameManager : MonoBehaviour, IGameManager
     {
+        public static GameManager Instance { get; private set; }
+        
         [ShowInInspector, ReadOnly]
         public GameState CurrentState { get; private set; } = GameState.Idle;
 
         [SerializeField]
         private bool autoRun = true;
 
-        [Inject]
-        private readonly IObjectResolver _objectResolver;
-
         private readonly GameManagerContext _context = new();
-
+        
         private void Awake()
         {
-            _objectResolver.Inject(_context);
+            if (Instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
         
         private void Start()
@@ -33,6 +40,11 @@ namespace Game
             }
         }
 
+        public void AddListener(IGameListener listener)
+        {
+            _context.AddListener(listener);
+        }
+        
         [Button]
         public void InitializeGame()
         {
