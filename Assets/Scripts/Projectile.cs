@@ -1,4 +1,5 @@
 using UnityEngine;
+using VContainer;
 
 public sealed class Projectile : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public sealed class Projectile : MonoBehaviour
 
     private Player _player;
 
-    private void Awake()
+    [Inject]
+    private void Construct(Player player)
     {
-        _player = Player.Instance;
+        _player = player;
     }
 
     private void Update()

@@ -1,11 +1,11 @@
 using System;
+using App;
+using Game;
 using UnityEngine;
+using VContainer;
 
-[DefaultExecutionOrder(-100)]
 public sealed class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; }
-
     public event Action<int> HealthChanged;
 
     public event Action Destroyed;
@@ -20,18 +20,12 @@ public sealed class Player : MonoBehaviour
 
     private CharacterController _characterController;
     
-    private void Awake()
+    [Inject]
+    private void Construct(CharacterController characterController, SaveManager saveManager)
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-
-            _characterController = GetComponentInChildren<CharacterController>();
-        }
+        _characterController = characterController;
+        
+        Debug.Log(saveManager);
     }
 
     private void Update()

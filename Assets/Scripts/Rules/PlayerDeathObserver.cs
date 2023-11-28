@@ -1,17 +1,16 @@
 using Game;
-using UnityEngine;
 
 namespace Rules
 {
-    public sealed class PlayerDeathObserver : MonoBehaviour, IStartGameListener, IFinishGameListener
+    public sealed class PlayerDeathObserver : IStartGameListener, IFinishGameListener
     {
-        private GameManager _gameManager;
-        private Player _player;
+        private readonly IGameManager _gameManager;
+        private readonly Player _player;
 
-        private void Awake()
+        public PlayerDeathObserver(IGameManager gameManager, Player player)
         {
-            _gameManager = GameManager.Instance;
-            _player = Player.Instance;
+            _gameManager = gameManager;
+            _player = player;
         }
 
         void IStartGameListener.OnGameStarted()

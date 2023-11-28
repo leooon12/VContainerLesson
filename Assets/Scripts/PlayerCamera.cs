@@ -1,5 +1,6 @@
 using Game;
 using UnityEngine;
+using VContainer;
 
 public sealed class PlayerCamera : MonoBehaviour, IInitializeGameListener, IStartGameListener, IFinishGameListener
 {
@@ -8,9 +9,10 @@ public sealed class PlayerCamera : MonoBehaviour, IInitializeGameListener, IStar
     
     private Player _player;
     
-    private void Awake()
+    [Inject]
+    private void Construct(Player player)
     {
-        _player = Player.Instance;
+        _player = player;
     }
 
     private void LateUpdate()

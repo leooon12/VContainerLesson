@@ -1,15 +1,14 @@
 using Game;
-using UnityEngine;
 
 namespace Rules
 {
-    public sealed class GameTimerController : MonoBehaviour, IStartGameListener, IFinishGameListener
+    public sealed class GameTimerController : IStartGameListener, IFinishGameListener
     {
-        private GameTimer _gameTimer;
+        private readonly GameTimer _gameTimer;
 
-        private void Awake()
+        public GameTimerController(GameTimer gameTimer)
         {
-            _gameTimer = GameTimer.Instance;
+            _gameTimer = gameTimer;
         }
         
         void IStartGameListener.OnGameStarted()

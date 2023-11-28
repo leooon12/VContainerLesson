@@ -1,13 +1,18 @@
 using System.Collections.Generic;
+using VContainer;
 
 namespace Game
 {
     public sealed class GameManagerContext
     {
-        private readonly List<IGameListener> _listeners = new();
+        private IEnumerable<IGameListener> _listeners;
 
-        public void AddListener(IGameListener listener) => _listeners.Add(listener);
-
+        [Inject]
+        private void Construct(IEnumerable<IGameListener> listeners)
+        {
+            _listeners = listeners;
+        }
+        
         public void OnGameInitialized()
         {
             foreach (var listener in _listeners)

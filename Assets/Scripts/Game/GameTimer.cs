@@ -1,14 +1,12 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using VContainer.Unity;
 
 namespace Game
 {
-    [DefaultExecutionOrder(-100)]
-    public sealed class GameTimer : MonoBehaviour
+    public sealed class GameTimer : ITickable
     {
-        public static GameTimer Instance { get; private set; }
-
         public event Action<float> Ticked;
         
         [ShowInInspector, ReadOnly]
@@ -16,20 +14,8 @@ namespace Game
         
         [ShowInInspector, ReadOnly]
         public bool IsSet { get; private set; }
-        
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
-        private void Update()
+        void ITickable.Tick()
         {
             if (IsSet)
             {
